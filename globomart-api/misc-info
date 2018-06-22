@@ -1,0 +1,39 @@
+Important Links To Get Details About the implementation of Feign Client
+    1. https://github.com/OpenFeign/feign
+    2. https://github.com/OpenFeign/feign-form  -- Refer this to know about how to  adds support for encoding application/x-www-form-urlencoded and multipart/form-data forms.
+
+
+As per proposed architecture, there will be multiple microservices eg:-
+    1. Product Catalog Management
+    2. Price Management
+    3. Order Management
+    4. Inventory Management
+    5. Rest Application (globomart-api):- The basic functionality of this application will be to serve the rest API for end user. Internally it will make call to other microservices to full-fill its request. So the microservices will not be exposed to end user directly but rather it will be exposed through globalmart-api.
+
+So far developed application details:-  There are two microservices created as part of this assignment
+    1. product-catalog:- The microservice meant for managing product catalog.
+    2. globomart-api:- The microservice meant for serving front-end/end-user request.
+
+Steps to run the application:-
+    1. product-catalog application:- navigate to product-catalog application directory. Run the application using gradle clean bootRun command. This application will run on localhost at http port 7050.
+    2. globomart-api application:- navigate to globomart-api application directory. Run the application using gradle clean bootRun command. This application will run on localhost at http port 8080
+
+Sample API:-
+    1. Create Catalog:-
+        a. Request:- curl 'http://localhost:8080/v1/catalog/create' -H 'Content-Type: application/json;charset=UTF-8' --data-binary $'{\n"name":"Test Catalog"\n}'
+        b. Response:- {"status":true,"message":"Record successfully saved.","data":{"id":13,"name":"Test Catalog"}}
+    2. Search Catalog:-
+        a. Request:- curl 'http://localhost:8080/v1/catalog/search' -H 'Content-Type: application/json;charset=UTF-8' --data-binary '{"pageSize":10,"pageIndex":0,"sortColumn":"id","sortOrder":"asc","query":{"name":"Test"}}'
+        b. Response:- {"sortColumn":"id","sortOrder":"asc","pageSize":10,"pageIndex":0,"fetchAllRecords":false,"status":true,"message":"Request processed successfully","data":[{"id":10,"name":"Test Catalog"},{"id":11,"name":"Test Catalog"},{"id":12,"name":"Test Catalog"},{"id":13,"name":"Test Catalog"}],"query":{"name":"Test"},"recordsTotal":4,"recordsFiltered":4}
+    3. Create Product:-
+        a. Request:- curl 'http://localhost:8080/v1/product/create' -H 'Content-Type: application/json;charset=UTF-8' --data-binary $'{\n"name":"Test Product",\n"type":"FORMAL_SHIRT",\n"catalogId":10\n}'
+        b. Response:- {"status":true,"message":"Record successfully saved.","data":{"id":21,"name":"Test Product","type":"FORMAL_SHIRT","catalogId":10}}
+    4. Search Product:-
+        a. Request:- curl 'http://localhost:8080/v1/product/search' -H 'Content-Type: application/json;charset=UTF-8' --data-binary '{"pageSize":10,"pageIndex":0,"sortColumn":"id","sortOrder":"asc","query":{"name":"Test"}}'
+        b. Response:- {"sortColumn":"id","sortOrder":"asc","pageSize":10,"pageIndex":0,"fetchAllRecords":false,"status":true,"message":"Request processed successfully","data":[{"id":20,"name":"Test Product","catalogId":10,"catalogName":"Test Catalog"},{"id":21,"name":"Test Product","catalogId":10,"catalogName":"Test Catalog"}],"query":{"name":"Test"},"recordsTotal":2,"recordsFiltered":2}
+    5. Delete Product:-
+        a. Request:- curl 'http://localhost:8080/v1/product/remove' -H 'Content-Type: application/json;charset=UTF-8' --data-binary $'{\n  "id":21\n}'
+        b. Response:- {"status":true,"message":"Record deleted successfully.","data":{"id":21}}
+
+
+

@@ -40,6 +40,7 @@ dependencies {
     compile("io.github.openfeign:feign-gson:${feignClientVersion}")
     compile("io.github.openfeign:feign-slf4j:${feignClientVersion}")
     compile group: 'commons-lang', name: 'commons-lang', version: '2.2'
+    compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.0'
 
     bootRun {
         addResources = true // We can set it to true if we would like to reload src/main/resources
